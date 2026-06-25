@@ -6,8 +6,8 @@ const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
 const port = process.env.PORT || 3000;
 
-// Initialize Next.js
-const app = next({ dev, hostname, port });
+// Initialize Next.js without passing port to constructor to support Unix socket paths in Passenger
+const app = next({ dev });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
