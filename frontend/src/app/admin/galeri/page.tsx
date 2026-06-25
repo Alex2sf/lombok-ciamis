@@ -46,7 +46,7 @@ const DEFAULT_TESTIMONIALS: TestimonialItem[] = [
     role: "Peserta Trip Rinjani, Bandung",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80",
     stars: 5,
-    text: "Summit Rinjani adalah bucket list gue selama bertahun-tahun. Tim LombokWander beneran membantu setiap langkah pendakian. Equipment lengkap, porter profesional, dan pemandangan puncaknya... gak ada kata selain epic.",
+    text: "Summit Rinjani adalah bucket list gue selama bertahun-tahun. Tim Batur Ngelamang beneran membantu setiap langkah pendakian. Equipment lengkap, porter profesional, dan pemandangan puncaknya... gak ada kata selain epic.",
   },
   {
     name: "Sari & Dini",
@@ -61,7 +61,7 @@ export default function AdminGaleri() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [user, setUser] = useState({ name: "Admin", email: "admin@lombokwander.id" });
+  const [user, setUser] = useState({ name: "Admin", email: "admin@baturngelamang.com" });
 
   // Gallery state
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
@@ -219,7 +219,7 @@ export default function AdminGaleri() {
             <ImageIcon className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="font-black text-lg tracking-tight text-white">LombokWander</h1>
+            <h1 className="font-black text-lg tracking-tight text-white">Batur Ngelamang</h1>
             <span className="text-[10px] font-bold text-teal-400 uppercase tracking-widest">Admin Panel</span>
           </div>
         </div>
@@ -282,7 +282,7 @@ export default function AdminGaleri() {
                 <ImageIcon className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="font-black text-white">LombokWander</h1>
+                <h1 className="font-black text-white">Batur Ngelamang</h1>
                 <span className="text-[10px] font-bold text-teal-400 tracking-wider">Admin</span>
               </div>
             </div>

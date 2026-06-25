@@ -125,7 +125,7 @@ function Sidebar({
         {/* Logo */}
         <div className="h-[72px] flex items-center justify-between px-6 border-b border-white/5 flex-shrink-0">
           <div className="text-xl font-black bg-gradient-to-r from-teal-300 to-blue-400 bg-clip-text text-transparent tracking-tighter">
-            LombokWander.
+            Batur Ngelamang.
           </div>
           <button onClick={onClose} className="lg:hidden text-slate-500 hover:text-white">
             <X className="w-5 h-5" />
@@ -187,7 +187,7 @@ export default function AdminDashboard() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [user, setUser] = useState({ name: "Admin", email: "admin@lombokwander.id" });
+  const [user, setUser] = useState({ name: "Admin", email: "admin@baturngelamang.com" });
   const [posts, setPosts] = useState<Post[]>([]);
   const [mounted, setMounted] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);

@@ -44,11 +44,11 @@ export default function AdminLogin() {
 
       // MOCK – hapus blok ini saat backend sudah siap
       await new Promise((r) => setTimeout(r, 1500));
-      if (email === "admin@lombokwander.id" && password === "admin123") {
+      if (email === "admin@baturngelamang.com" && password === "admin123") {
         localStorage.setItem("admin_token", "mock_token_12345");
         localStorage.setItem(
           "admin_user",
-          JSON.stringify({ name: "Admin LombokWander", email })
+          JSON.stringify({ name: "Admin Batur Ngelamang", email })
         );
         router.push("/admin/dashboard");
       } else {
@@ -79,7 +79,7 @@ export default function AdminLogin() {
 
         <div className="relative z-10 text-white">
           <div className="text-2xl font-black bg-gradient-to-r from-teal-300 to-blue-400 bg-clip-text text-transparent tracking-tighter">
-            LombokWander.
+            Batur Ngelamang.
           </div>
         </div>
 
@@ -110,7 +110,7 @@ export default function AdminLogin() {
         </div>
 
         <div className="relative z-10 text-slate-600 text-sm">
-          © 2026 LombokWander Open Trip
+          © 2026 Batur Ngelamang Open Trip
         </div>
       </div>
 
@@ -124,7 +124,7 @@ export default function AdminLogin() {
           {/* Mobile logo */}
           <div className="text-center mb-8 lg:hidden">
             <div className="text-2xl font-black bg-gradient-to-r from-teal-300 to-blue-400 bg-clip-text text-transparent tracking-tighter">
-              LombokWander.
+              Batur Ngelamang.
             </div>
           </div>
 
@@ -158,7 +158,7 @@ export default function AdminLogin() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition outline-none text-sm"
-                    placeholder="admin@lombokwander.id"
+                    placeholder="admin@baturngelamang.com"
                     required
                     autoComplete="email"
                   />
@@ -217,7 +217,7 @@ export default function AdminLogin() {
 
             {/* Hint */}
             <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl text-xs text-blue-400 text-center">
-              Demo: <code className="font-mono">admin@lombokwander.id</code> / <code className="font-mono">admin123</code>
+              Demo: <code className="font-mono">admin@baturngelamang.com</code> / <code className="font-mono">admin123</code>
             </div>
           </div>
 

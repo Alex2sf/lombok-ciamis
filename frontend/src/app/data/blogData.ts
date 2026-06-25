@@ -73,7 +73,7 @@ export const BLOG_POSTS: BlogPost[] = [
     content: `
 Liburan ke Lombok sering dibilang mahal karena tiket pesawat atau biaya penyeberangan gili. Padahal, kalau lu tahu celahnya, lu bisa dapet liburan super seru dengan budget yang masuk akal banget.
 
-Berikut beberapa tips dari tim LombokWander biar trip lu hemat tapi tetep kerasa eksklusif:
+Berikut beberapa tips dari tim Batur Ngelamang biar trip lu hemat tapi tetep kerasa eksklusif:
 
 ### 1. Pilih Open Trip, Hindari Private Trip Sendirian
 Kalau lu pergi cuma berdua atau bertiga, sewa kapal hopping gili atau mobil keliling Lombok bakal kerasa mahal banget. Dengan ikut Open Trip, biaya sewa kapal, mobil, dan guide dibagi rata bareng peserta lain. Lebih murah dan bonusnya dapet temen baru!
@@ -85,14 +85,14 @@ Bulan Juni-Agustus dan Desember biasanya harga hotel di Lombok naik drastis. Kal
 Nggak perlu tiap hari makan di restoran bule pinggir pantai Senggigi. Lombok punya kuliner lokal yang juara banget, kayak Nasi Balap Puyung atau Ayam Taliwang di warung sederhana pinggir jalan. Harganya ramah kantong dan rasanya jauh lebih otentik!
 
 ### 4. Tinggal Bawa Baju, Biar Travel Agent yang Urus Sisanya
-Banyak orang coba urus semuanya sendiri tapi malah boncos di biaya tak terduga (seperti biaya retribusi spot wisata, tips lokal guide, dll). Di LombokWander, paket open trip kita udah include semuanya. Lu tinggal bawa baju dan kamera, sisanya kita yang urus tanpa biaya siluman.
+Banyak orang coba urus semuanya sendiri tapi malah boncos di biaya tak terduga (seperti biaya retribusi spot wisata, tips lokal guide, dll). Di Batur Ngelamang, paket open trip kita udah include semuanya. Lu tinggal bawa baju dan kamera, sisanya kita yang urus tanpa biaya siluman.
 
 Yuk, langsung cek jadwal open trip kita bulan ini!
     `,
     category: "Tips",
     date: "20 Juni 2026",
     readTime: "3 min read",
-    author: "Rian LombokWander",
+    author: "Rian Batur Ngelamang",
     image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=900&q=85",
     views: 1240,
   },
@@ -113,7 +113,7 @@ Pakailah baju renang, jersey olahraga dry-fit, atau kaos santai yang enteng saat
 Batuan di aliran sungai Green Canyon itu sebagian licin dan tajam. Sangat disarankan pakai sandal gunung yang mengikat kuat atau sepatu air khusus. Jangan pakai sandal jepit biasa karena rawan hanyut kebawa arus sungai.
 
 ### 3. Bawa Waterproof Pouch untuk HP
-Meskipun tim LombokWander menyediakan dokumentasi gratis dengan kamera tahan air, kalau lu tetep mau bawa HP sendiri buat update status, wajib pakai pouch kedap air yang dikalungkan ke leher. Pastikan pouch-nya dites dulu di homestay ya!
+Meskipun tim Batur Ngelamang menyediakan dokumentasi gratis dengan kamera tahan air, kalau lu tetep mau bawa HP sendiri buat update status, wajib pakai pouch kedap air yang dikalungkan ke leher. Pastikan pouch-nya dites dulu di homestay ya!
 
 ### 4. Patuhi Instruksi Guide Lokal
 Di setiap titik arus deras, guide lokal kita bakal kasih tahu kapan harus tengkurap, kapan harus telentang, atau di mana spot yang aman buat lompat dari tebing. Jangan coba-coba lompat di luar spot yang direkomendasikan ya, demi keselamatan lu juga.
@@ -135,7 +135,7 @@ Siap seru-seruan basah-basahan akhir pekan ini? Yuk gabung Open Trip Ciamis kita
     content: `
 Kalau main ke Pangandaran tapi cuma main air tanpa wisata kulineran, trip lu belom lengkap namanya. Di area pantai barat dan timur Pangandaran, ada banyak banget kuliner laut segar yang diolah langsung pakai bumbu khas Sunda.
 
-Berikut 5 rekomendasi kuliner wajib coba versi LombokWander:
+Berikut 5 rekomendasi kuliner wajib coba versi Batur Ngelamang:
 
 ### 1. Kepiting Saus Padang Pantai Timur
 Pangandaran terkenal dengan kepiting bakau segarnya. Di area pasar ikan pantai timur, lu bisa pilih langsung kepiting hidup lalu minta dimasakin saus padang atau asam manis. Dagingnya tebal dan manis alami!

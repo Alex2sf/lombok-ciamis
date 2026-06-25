@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const WA_PHONE = "6281234567890";
+const WA_PHONE = "6282250580331";
 const WA_MSG = "Halo! Saya tertarik dengan paket Open Trip Lombok. Bisa info lebih lanjut?";
 const WA_URL = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(WA_MSG)}`;
 
@@ -33,8 +33,8 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="text-2xl font-black tracking-tight flex items-center gap-2">
-            <span className="bg-gradient-to-r from-blue-500 to-teal-400 bg-clip-text text-transparent">Lombok</span>
-            <span className={scrolled ? "text-slate-900" : "text-white"}>Wander</span>
+            <span className="bg-gradient-to-r from-blue-500 to-teal-400 bg-clip-text text-transparent">Batur</span>
+            <span className={scrolled ? "text-slate-900" : "text-white"}>Ngelamang</span>
           </Link>
           <div
             className={`hidden md:flex items-center space-x-8 text-sm font-semibold transition-colors duration-300 ${

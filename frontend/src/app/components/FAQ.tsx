@@ -28,7 +28,7 @@ const faqs = [
   },
 ];
 
-const WA_PHONE = "6281234567890";
+const WA_PHONE = "6282250580331";
 const WA_URL = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent("Halo! Saya punya pertanyaan tentang Open Trip Lombok.")}`;
 
 export default function FAQ() {

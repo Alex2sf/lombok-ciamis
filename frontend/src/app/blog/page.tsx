@@ -156,7 +156,7 @@ export default function BlogIndex() {
       {/* Mini Footer */}
       <footer className="bg-slate-950 text-slate-400 py-8 border-t border-slate-900 flex-shrink-0">
         <div className="max-w-7xl mx-auto px-6 text-center text-xs">
-          © 2026 LombokWander Open Trip. Hak Cipta Dilindungi Undang-Undang.
+          © 2026 Batur Ngelamang Open Trip. Hak Cipta Dilindungi Undang-Undang.
         </div>
       </footer>
     </div>

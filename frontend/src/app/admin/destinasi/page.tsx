@@ -16,7 +16,7 @@ export default function AdminDestinasi() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [user, setUser] = useState({ name: "Admin", email: "admin@lombokwander.id" });
+  const [user, setUser] = useState({ name: "Admin", email: "admin@baturngelamang.com" });
 
   // Destinations data state
   const [activeTab, setActiveTab] = useState<"lombok" | "ciamis">("lombok");
@@ -239,7 +239,7 @@ export default function AdminDestinasi() {
             <MapPin className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="font-black text-lg tracking-tight text-white">LombokWander</h1>
+            <h1 className="font-black text-lg tracking-tight text-white">Batur Ngelamang</h1>
             <span className="text-[10px] font-bold text-teal-400 uppercase tracking-widest">Admin Panel</span>
           </div>
         </div>
@@ -302,7 +302,7 @@ export default function AdminDestinasi() {
                 <MapPin className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="font-black text-white">LombokWander</h1>
+                <h1 className="font-black text-white">Batur Ngelamang</h1>
                 <span className="text-[10px] font-bold text-teal-400 tracking-wider">Admin</span>
               </div>
             </div>

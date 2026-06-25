@@ -2,7 +2,7 @@
 
 import { DESTINATIONS_DATA, DestinationData } from "../data/destinationsData";
 
-const WA_PHONE = "6281234567890";
+const WA_PHONE = "6282250580331";
 
 interface Props {
   data: DestinationData;

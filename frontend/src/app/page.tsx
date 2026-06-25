@@ -12,7 +12,7 @@ import BlogPreview from "./components/BlogPreview";
 import DestinationSelector from "./components/DestinationSelector";
 import { DESTINATIONS_DATA, DestinationKey } from "./data/destinationsData";
 
-const WA_PHONE = "6281234567890";
+const WA_PHONE = "6282250580331";
 
 const stats = [
   { value: "5,000+", label: "Kawan Jalan" },
@@ -186,7 +186,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 text-sm font-bold rounded-full mb-4 tracking-widest uppercase">
-              Kenapa LombokWander?
+              Kenapa Batur Ngelamang?
             </span>
             <h2 className="text-4xl lg:text-5xl font-black text-slate-900 mb-4 tracking-tight">
               Nggak Cuma Nganterin Jalan.
@@ -233,7 +233,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="md:col-span-2">
-              <div className="text-3xl font-black text-white mb-4">LombokWander.</div>
+              <div className="text-3xl font-black text-white mb-4">Batur Ngelamang.</div>
               <p className="text-slate-500 max-w-sm mb-6 leading-relaxed">
                 Penyedia Open Trip Lombok & Ciamis yang udah jalan sejak 2017. Kita yang siapin transportasi, makan, dan dokumentasi, lu tinggal bawa badan aja.
               </p>
@@ -278,8 +278,8 @@ export default function Home() {
               <ul className="space-y-3 text-sm">
                 <li>📍 Mataram, Lombok, NTB</li>
                 <li>📍 Ciamis, Jawa Barat</li>
-                <li>📱 +62 812-3456-7890</li>
-                <li>📧 hello@lombokwander.id</li>
+                <li>📱 +62 822-5058-0331</li>
+                <li>📧 hello@baturngelamang.com</li>
                 <li className="pt-2">
                   <Link href="/admin/login" className="text-slate-600 hover:text-slate-400 transition text-xs">
                     Admin Login →
@@ -289,7 +289,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-slate-800 pt-8 text-center text-sm text-slate-600">
-            © 2026 LombokWander Open Trip. Hak Cipta Dilindungi Undang-Undang.
+            © 2026 Batur Ngelamang Open Trip. Hak Cipta Dilindungi Undang-Undang.
           </div>
         </div>
       </footer>

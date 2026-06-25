@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Admin Panel – LombokWander",
-  description: "Dashboard admin untuk mengelola konten LombokWander Open Trip",
+  title: "Admin Panel – Batur Ngelamang",
+  description: "Dashboard admin untuk mengelola konten Batur Ngelamang Open Trip",
   robots: { index: false, follow: false },
 };
 

@@ -1,6 +1,6 @@
 "use client";
 
-export default function FloatingWA({ phone = "6281234567890", message = "Halo! Saya tertarik dengan paket Open Trip Lombok. Bisa info lebih lanjut?" }) {
+export default function FloatingWA({ phone = "6282250580331", message = "Halo! Saya tertarik dengan paket Open Trip Lombok. Bisa info lebih lanjut?" }) {
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   return (
     <a

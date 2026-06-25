@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import { getBlogPosts, BlogPost } from "../../data/blogData";
 
-const WA_PHONE = "6281234567890";
+const WA_PHONE = "6282250580331";
 const WA_MSG = "Halo! Saya habis baca artikel di blog travel agent Anda dan tertarik mau tanya jadwal open trip terdekat.";
 const WA_URL = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(WA_MSG)}`;
 
@@ -31,7 +31,7 @@ export default function BlogDetail({ params }: { params: Promise<{ slug: string 
           <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
         </main>
         <footer className="bg-slate-950 text-slate-400 py-8 border-t border-slate-900 flex-shrink-0 text-center text-xs">
-          © 2026 LombokWander Open Trip.
+          © 2026 Batur Ngelamang Open Trip.
         </footer>
       </div>
     );
@@ -177,7 +177,7 @@ export default function BlogDetail({ params }: { params: Promise<{ slug: string 
 
       <footer className="bg-slate-950 text-slate-400 py-8 border-t border-slate-900 flex-shrink-0">
         <div className="max-w-7xl mx-auto px-6 text-center text-xs">
-          © 2026 LombokWander Open Trip. Hak Cipta Dilindungi Undang-Undang.
+          © 2026 Batur Ngelamang Open Trip. Hak Cipta Dilindungi Undang-Undang.
         </div>
       </footer>
     </div>

@@ -37,7 +37,7 @@ const DEFAULT_TESTIMONIALS: TestimonialItem[] = [
     role: "Peserta Trip Rinjani, Bandung",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80",
     stars: 5,
-    text: "Summit Rinjani adalah bucket list gue selama bertahun-tahun. Tim LombokWander beneran membantu setiap langkah pendakian. Equipment lengkap, porter profesional, dan pemandangan puncaknya... gak ada kata selain epic.",
+    text: "Summit Rinjani adalah bucket list gue selama bertahun-tahun. Tim Batur Ngelamang beneran membantu setiap langkah pendakian. Equipment lengkap, porter profesional, dan pemandangan puncaknya... gak ada kata selain epic.",
   },
   {
     name: "Sari & Dini",
@@ -48,7 +48,7 @@ const DEFAULT_TESTIMONIALS: TestimonialItem[] = [
   },
 ];
 
-const WA_URL = `https://wa.me/6281234567890?text=${encodeURIComponent("Halo! Saya ingin tanya jadwal Open Trip Lombok tersedia.")}`;
+const WA_URL = `https://wa.me/6282250580331?text=${encodeURIComponent("Halo! Saya ingin tanya jadwal Open Trip Lombok tersedia.")}`;
 
 export default function GalleryAndTestimonials() {
   const [gallery, setGallery] = useState<GalleryItem[]>(DEFAULT_GALLERY);
@@ -123,7 +123,7 @@ export default function GalleryAndTestimonials() {
           <div className="bg-gradient-to-r from-blue-600 to-teal-500 rounded-3xl p-10 md:p-14 flex flex-col md:flex-row items-center justify-between gap-8 text-white shadow-2xl shadow-blue-500/30">
             <div>
               <h3 className="text-3xl md:text-4xl font-black mb-3">Giliran kamu nulis cerita<br/>indah bareng kami! ✨</h3>
-              <p className="text-blue-100 text-lg">Ribuan peserta sudah membuktikan. Yuk, jadilah bagian dari keluarga besar LombokWander.</p>
+              <p className="text-blue-100 text-lg">Ribuan peserta sudah membuktikan. Yuk, jadilah bagian dari keluarga besar Batur Ngelamang.</p>
             </div>
             <a href={WA_URL} target="_blank" rel="noreferrer"
               className="flex-shrink-0 px-8 py-5 bg-white text-blue-700 rounded-2xl font-black text-lg hover:bg-blue-50 transition shadow-xl flex items-center gap-3">
