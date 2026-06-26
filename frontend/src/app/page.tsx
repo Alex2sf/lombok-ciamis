@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import FloatingWA from "./components/FloatingWA";
 import Destinations from "./components/Destinations";
 import Itinerary from "./components/Itinerary";
+import TripPackages from "./components/TripPackages";
 import GalleryTestimonials from "./components/GalleryTestimonials";
 import FAQ from "./components/FAQ";
 import BlogPreview from "./components/BlogPreview";
@@ -59,14 +60,47 @@ export default function Home() {
   const [destinations, setDestinations] = useState<Record<string, any>>(DESTINATIONS_DATA);
 
   useEffect(() => {
-    const local = localStorage.getItem("admin_destinations");
-    if (local) {
+    const fetchDestinations = async () => {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
       try {
-        setDestinations(JSON.parse(local));
+        const res = await fetch(`${apiUrl}/destinations`);
+        if (res.ok) {
+          const data = await res.json();
+          const mapped: Record<string, any> = {};
+          data.forEach((item: any) => {
+            mapped[item.key] = {
+              key: item.key,
+              label: item.label,
+              region: item.region,
+              heroTagline: item.hero_tagline,
+              accentColor: item.accent_color,
+              accentTextColor: item.accent_text_color,
+              waMessage: item.wa_message,
+              spots: item.spots || [],
+              itinerary: item.itinerary || [],
+              packages: item.packages || [],
+            };
+          });
+          setDestinations(mapped);
+          localStorage.setItem("admin_destinations", JSON.stringify(mapped));
+          return;
+        }
       } catch (e) {
-        // noop
+        console.warn("Laravel API offline, using local storage fallback for destinations", e);
       }
-    }
+
+      // Local storage fallback
+      const local = localStorage.getItem("admin_destinations");
+      if (local) {
+        try {
+          setDestinations(JSON.parse(local));
+        } catch (e) {
+          // noop
+        }
+      }
+    };
+
+    fetchDestinations();
   }, []);
 
   const dest = destinations[activeKey] || DESTINATIONS_DATA[activeKey];
@@ -218,6 +252,9 @@ export default function Home() {
 
       {/* ─── ITINERARY ─────────────────────────────────────────── */}
       <Itinerary data={dest} />
+
+      {/* ─── TRIP PACKAGES ─────────────────────────────────────── */}
+      <TripPackages data={dest} />
 
       {/* ─── GALLERY + TESTIMONIALS ────────────────────────────── */}
       <GalleryTestimonials />

@@ -21,6 +21,14 @@ export interface ItineraryDay {
   icon: string;
 }
 
+export interface TripPackage {
+  name: string;
+  price?: number; // optional price (numeric for formatting)
+  description?: string; // optional description
+  features?: string[]; // optional list of features/benefits
+  image?: string; // optional image/photo URL
+}
+
 export interface DestinationData {
   key: DestinationKey;
   label: string;          // nama tampil di tab
@@ -31,6 +39,7 @@ export interface DestinationData {
   spots: SpotItem[];
   itinerary: ItineraryDay[];
   waMessage: string;      // pesan default WhatsApp
+  packages?: TripPackage[]; // daftar paket trip
 }
 
 // ─── LOMBOK ─────────────────────────────────────────────────
@@ -100,6 +109,47 @@ const lombokData: DestinationData = {
       icon: "🏡",
     },
   ],
+  packages: [
+    {
+      name: "Paket Backpacker (3D2N)",
+      price: 1500000,
+      description: "Liburan seru bareng temen-temen dengan budget super ramah di kantong.",
+      image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&q=80",
+      features: [
+        "Homestay AC Share Room",
+        "Transportasi AC Selama Trip",
+        "Makan 6x Sesuai Program",
+        "Snorkeling Equipment",
+        "Dokumentasi Foto & Gopro",
+      ],
+    },
+    {
+      name: "Paket Premium Couple (3D2N)",
+      price: 3500000,
+      description: "Spesial buat lu dan pasangan yang mau menikmati keindahan Lombok secara privat.",
+      image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=600&q=80",
+      features: [
+        "Hotel Bintang 3 Private Room",
+        "Mobil Privat + Driver & Bensin",
+        "Makan Romantis Malam Hari",
+        "Tiket Masuk Semua Spot Wisata",
+        "Dokumentasi Premium & Drone",
+      ],
+    },
+    {
+      name: "Paket Adventurer Rinjani (4D3N)",
+      price: undefined,
+      description: "Pendakian gunung Rinjani lengkap dengan porter dan perlengkapan camping kelas premium.",
+      image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80",
+      features: [
+        "Tenda Dome Premium Kapasitas 4",
+        "Porter Pembawa Alat & Makanan",
+        "Makan Selama Pendakian",
+        "Peralatan Masak & Makan Lengkap",
+        "Simaksi / Tiket Masuk Rinjani",
+      ],
+    },
+  ],
 };
 
 // ─── CIAMIS ─────────────────────────────────────────────────
@@ -153,7 +203,7 @@ const ciamisData: DestinationData = {
     {
       day: "Hari 2",
       title: "Body Rafting di Green Canyon",
-      desc: "Habis sarapan, kita langsung meluncur ke lokasi rafting. Pasang pelampung, terus rasakan serunya hanyut menyusuri sungai Green Canyon yang sejuk bareng instruktur berpengalaman.",
+      desc: "Habis sarapan, kita langsung meluncur to lokasi rafting. Pasang pelampung, terus rasakan serunya hanyut menyusuri sungai Green Canyon yang sejuk bareng instruktur berpengalaman.",
       icon: "🏞️",
     },
     {
@@ -167,6 +217,47 @@ const ciamisData: DestinationData = {
       title: "Beli Oleh-Oleh & Antar Pulang",
       desc: "Belanja camilan khas Galendo dan kerajinan lokal buat dibawa pulang. Kita makan siang bareng menu nasi liwet khas Sunda sebelum diantar balik ke meeting point awal.",
       icon: "🛖",
+    },
+  ],
+  packages: [
+    {
+      name: "Paket Hemat Body Rafting (2D1N)",
+      price: 750000,
+      description: "Trip singkat akhir pekan buat ngerasain serunya body rafting di Green Canyon.",
+      image: "https://images.unsplash.com/photo-1530866495561-507c9faab2ed?w=600&q=80",
+      features: [
+        "Penginapan Homestay AC",
+        "Tiket Body Rafting Green Canyon",
+        "Makan 4x Prasmanan",
+        "Transportasi Elf/Hiace AC PP",
+        "Instruktur Rafting Berpengalaman",
+      ],
+    },
+    {
+      name: "Paket Family Gathering (3D2N)",
+      price: 1250000,
+      description: "Cocok untuk liburan keluarga besar atau rombongan kantor dengan fasilitas lengkap.",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&q=80",
+      features: [
+        "Hotel Dekat Pantai Private Room",
+        "Transportasi Bus Pariwisata AC",
+        "Makan 8x Prasmanan + Seafood",
+        "Tiket Masuk Semua Spot Wisata",
+        "Dokumentasi Foto & Video Udara",
+      ],
+    },
+    {
+      name: "Paket Custom Trip Ciamis",
+      price: undefined,
+      description: "Punya rencana trip sendiri atau spot custom yang mau dikunjungi? Hubungi admin kita.",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80",
+      features: [
+        "Jadwal Fleksibel Sesuai Request",
+        "Pilihan Kendaraan Elf/Hiace/Bus",
+        "Pilihan Penginapan Variatif",
+        "Bebas Pilih Spot Destinasi",
+        "Konsultasi Rute Gratis dengan Admin",
+      ],
     },
   ],
 };

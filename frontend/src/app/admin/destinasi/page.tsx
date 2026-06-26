@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LayoutDashboard, FileText, MapPin, Image as ImageIcon, Settings, LogOut, Menu, X, Save, Edit2, Plus, Trash2, Eye } from "lucide-react";
-import { DestinationData, SpotItem, ItineraryDay } from "../../data/destinationsData";
+import { DestinationData, SpotItem, ItineraryDay, TripPackage } from "../../data/destinationsData";
 
 const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -31,6 +31,7 @@ export default function AdminDestinasi() {
   // Spots and Itinerary lists for editing
   const [spots, setSpots] = useState<SpotItem[]>([]);
   const [itinerary, setItinerary] = useState<ItineraryDay[]>([]);
+  const [packages, setPackages] = useState<TripPackage[]>([]);
 
   // Edit Spot Modal States
   const [spotModalOpen, setSpotModalOpen] = useState(false);
@@ -39,6 +40,15 @@ export default function AdminDestinasi() {
   const [spotDesc, setSpotDesc] = useState("");
   const [spotImg, setSpotImg] = useState("");
   const [spotTag, setSpotTag] = useState("");
+
+  // Edit Package Modal States
+  const [packagesModalOpen, setPackagesModalOpen] = useState(false);
+  const [editingPackageIndex, setEditingPackageIndex] = useState<number | null>(null);
+  const [packageName, setPackageName] = useState("");
+  const [packagePrice, setPackagePrice] = useState<string>("");
+  const [packageDesc, setPackageDesc] = useState("");
+  const [packageFeatures, setPackageFeatures] = useState<string>("");
+  const [packageImg, setPackageImg] = useState("");
 
   // Edit Itinerary Modal States
   const [itineraryModalOpen, setItineraryModalOpen] = useState(false);
@@ -65,7 +75,36 @@ export default function AdminDestinasi() {
     loadDestinations();
   }, [router]);
 
-  const loadDestinations = () => {
+  const loadDestinations = async () => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+    try {
+      const res = await fetch(`${apiUrl}/destinations`);
+      if (res.ok) {
+        const data = await res.json();
+        const mapped: Record<string, any> = {};
+        data.forEach((item: any) => {
+          mapped[item.key] = {
+            key: item.key,
+            label: item.label,
+            region: item.region,
+            heroTagline: item.hero_tagline,
+            accentColor: item.accent_color,
+            accentTextColor: item.accent_text_color,
+            waMessage: item.wa_message,
+            spots: item.spots || [],
+            itinerary: item.itinerary || [],
+            packages: item.packages || [],
+          };
+        });
+        setDestinations(mapped);
+        localStorage.setItem("admin_destinations", JSON.stringify(mapped));
+        populateFields(mapped[activeTab] || mapped["lombok"]);
+        return;
+      }
+    } catch (e) {
+      console.warn("Laravel API offline, using local storage fallback for destinations", e);
+    }
+
     const local = localStorage.getItem("admin_destinations");
     if (local) {
       try {
@@ -96,6 +135,7 @@ export default function AdminDestinasi() {
     setWaMessage(data.waMessage);
     setSpots(data.spots || []);
     setItinerary(data.itinerary || []);
+    setPackages(data.packages || []);
   };
 
   // Sync state when switching active destination tab
@@ -112,7 +152,7 @@ export default function AdminDestinasi() {
     router.push("/admin/login");
   };
 
-  const handleSaveDestination = (e: React.FormEvent) => {
+  const handleSaveDestination = async (e: React.FormEvent) => {
     e.preventDefault();
     
     const updatedDest: DestinationData = {
@@ -123,6 +163,7 @@ export default function AdminDestinasi() {
       waMessage,
       spots,
       itinerary,
+      packages,
     };
 
     const nextDestinations = {
@@ -132,9 +173,47 @@ export default function AdminDestinasi() {
 
     setDestinations(nextDestinations);
     localStorage.setItem("admin_destinations", JSON.stringify(nextDestinations));
-    
-    // Alert Notification
-    alert(`Sukses memperbarui info destinasi ${label}!`);
+
+    // Save to Database
+    const token = localStorage.getItem("admin_token");
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+
+    const dbPayload = {
+      label,
+      region,
+      hero_tagline: heroTagline,
+      wa_message: waMessage,
+      spots,
+      itinerary,
+      packages,
+    };
+
+    if (token) {
+      try {
+        const res = await fetch(`${apiUrl}/destinations/${activeTab}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(dbPayload)
+        });
+
+        if (res.ok) {
+          alert(`Sukses memperbarui info destinasi ${label} di database!`);
+        } else {
+          const errData = await res.json().catch(() => ({}));
+          console.error("Gagal menyimpan ke database Laravel:", errData);
+          alert("Gagal menyimpan ke database Laravel. Tersimpan lokal di browser.");
+        }
+      } catch (err) {
+        console.error("Error saving to database:", err);
+        alert("Server Laravel offline. Info destinasi tersimpan lokal di browser Anda.");
+      }
+    } else {
+      alert(`Sukses memperbarui info destinasi ${label} secara lokal! (Belum Login/Token tidak ada)`);
+    }
   };
 
   // Spot CRUD Helpers
@@ -225,6 +304,58 @@ export default function AdminDestinasi() {
     if (confirm("Hapus rencana hari ini?")) {
       const nextItinerary = itinerary.filter((_, idx) => idx !== index);
       setItinerary(nextItinerary);
+    }
+  };
+
+  // Package CRUD Helpers
+  const openEditPackage = (index: number) => {
+    setEditingPackageIndex(index);
+    const pkg = packages[index];
+    setPackageName(pkg.name);
+    setPackagePrice(pkg.price !== undefined ? String(pkg.price) : "");
+    setPackageDesc(pkg.description || "");
+    setPackageFeatures((pkg.features || []).join("\n"));
+    setPackageImg(pkg.image || "");
+    setPackagesModalOpen(true);
+  };
+
+  const openAddPackage = () => {
+    setEditingPackageIndex(null);
+    setPackageName("");
+    setPackagePrice("");
+    setPackageDesc("");
+    setPackageFeatures("");
+    setPackageImg("");
+    setPackagesModalOpen(true);
+  };
+
+  const handleSavePackage = () => {
+    const numericPrice = packagePrice.trim() !== "" ? parseFloat(packagePrice.replace(/[^0-9.-]+/g, "")) : undefined;
+    const newPkg: TripPackage = {
+      name: packageName,
+      price: isNaN(numericPrice as any) || numericPrice === undefined ? undefined : numericPrice,
+      description: packageDesc.trim() || undefined,
+      features: packageFeatures
+        .split("\n")
+        .map((f) => f.trim())
+        .filter(Boolean),
+      image: packageImg.trim() || undefined,
+    };
+
+    let nextPackages = [...packages];
+    if (editingPackageIndex !== null) {
+      nextPackages[editingPackageIndex] = newPkg;
+    } else {
+      nextPackages.push(newPkg);
+    }
+    setPackages(nextPackages);
+    setPackagesModalOpen(false);
+  };
+
+  const handleDeletePackage = (index: number) => {
+    if (confirm("Hapus paket trip ini?")) {
+      const nextPackages = packages.filter((_, idx) => idx !== index);
+      setPackages(nextPackages);
     }
   };
 
@@ -493,6 +624,63 @@ export default function AdminDestinasi() {
                   ))}
                 </div>
               </div>
+
+              {/* Box 2b: Pilihan Paket Trip */}
+              <div className="bg-white/5 border border-white/5 rounded-3xl p-6 lg:p-8 space-y-6">
+                <div className="flex items-center justify-between border-b border-white/5 pb-3">
+                  <h3 className="text-base font-bold text-white uppercase tracking-wider">
+                    Pilihan Paket Trip
+                  </h3>
+                  <button
+                    type="button"
+                    onClick={openAddPackage}
+                    className="px-3 py-1.5 bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white rounded-lg text-xs font-bold transition flex items-center gap-1 shadow"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    Tambah Paket
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {packages.map((pkg, idx) => (
+                    <div key={idx} className="bg-slate-950/80 border border-white/10 rounded-2xl p-5 flex gap-4 items-start justify-between relative group">
+                      <div className="flex-1 min-w-0">
+                        <span className="px-2 py-0.5 bg-blue-500/10 text-blue-400 text-[9px] font-black rounded-full uppercase tracking-wider">
+                          {pkg.price ? `Rp ${pkg.price.toLocaleString("id-ID")}` : "Harga Opsional / Hubungi Admin"}
+                        </span>
+                        <h4 className="font-extrabold text-white text-sm truncate mt-1.5">{pkg.name}</h4>
+                        {pkg.description && (
+                          <p className="text-slate-400 text-xs line-clamp-2 mt-0.5 leading-relaxed">{pkg.description}</p>
+                        )}
+                        <span className="text-[10px] text-slate-500 block mt-2 font-semibold">
+                          {pkg.features?.length || 0} Fasilitas
+                        </span>
+                      </div>
+                      <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => openEditPackage(idx)}
+                          className="p-1 text-slate-400 hover:text-blue-400 transition"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDeletePackage(idx)}
+                          className="p-1 text-slate-400 hover:text-red-400 transition"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                  {packages.length === 0 && (
+                    <div className="col-span-2 text-center py-6 text-slate-500 text-sm">
+                      Belum ada paket trip untuk destinasi ini. Klik "Tambah Paket" untuk membuat.
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
 
             {/* Kolom Samping (Kanan) */}
@@ -731,7 +919,116 @@ export default function AdminDestinasi() {
             </div>
           </div>
         </div>
-      )}
-    </div>
-  );
-}
+        )}
+
+        {/* ── Modal Edit/Tambah Paket Trip ──────────────────────── */}
+        {packagesModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/85 backdrop-blur-sm">
+            <div className="bg-slate-900 border border-white/10 rounded-3xl p-6 lg:p-8 max-w-md w-full shadow-2xl relative">
+              <button
+                onClick={() => setPackagesModalOpen(false)}
+                className="absolute top-6 right-6 text-slate-400 hover:text-white transition"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              <h3 className="text-lg font-black text-white mb-6">
+                {editingPackageIndex !== null ? "Edit Paket Trip" : "Tambah Paket Trip"}
+              </h3>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">Nama Paket</label>
+                  <input
+                    type="text"
+                    required
+                    value={packageName}
+                    onChange={(e) => setPackageName(e.target.value)}
+                    className="w-full px-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-teal-500 transition outline-none text-sm"
+                    placeholder="Contoh: Paket Backpacker (3D2N)"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">Harga (Rupiah - Opsional)</label>
+                  <input
+                    type="number"
+                    value={packagePrice}
+                    onChange={(e) => setPackagePrice(e.target.value)}
+                    className="w-full px-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-teal-500 transition outline-none text-sm"
+                    placeholder="Contoh: 1500000 (Kosongkan jika opsional/Hubungi Admin)"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">URL Gambar Banner Paket (Opsional)</label>
+                  <input
+                    type="url"
+                    value={packageImg}
+                    onChange={(e) => setPackageImg(e.target.value)}
+                    className="w-full px-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-teal-500 transition outline-none text-sm mb-2"
+                    placeholder="https://images.unsplash.com/photo-..."
+                  />
+                  {packageImg && (
+                    <div className="aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-950 border border-white/10 relative">
+                      <img
+                        src={packageImg}
+                        alt="Preview Banner Paket"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.target as HTMLElement).style.display = "none";
+                        }}
+                      />
+                      <span className="absolute bottom-2 right-2 bg-slate-900/80 px-2 py-0.5 rounded text-[10px] text-slate-300">
+                        Preview Foto Paket
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">Deskripsi Singkat</label>
+                  <textarea
+                    rows={2}
+                    value={packageDesc}
+                    onChange={(e) => setPackageDesc(e.target.value)}
+                    className="w-full px-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-teal-500 transition outline-none text-sm resize-none"
+                    placeholder="Contoh: Cocok untuk liburan hemat bareng kawan-kawan."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">
+                    Fasilitas & Layanan (Satu per baris)
+                  </label>
+                  <textarea
+                    rows={4}
+                    value={packageFeatures}
+                    onChange={(e) => setPackageFeatures(e.target.value)}
+                    className="w-full px-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-teal-500 transition outline-none text-sm resize-none"
+                    placeholder="Hotel AC 2 Malam&#10;Makan 6x&#10;Dokumentasi Foto & Gopro"
+                  />
+                </div>
+
+                <div className="flex gap-3 pt-4 border-t border-white/5">
+                  <button
+                    type="button"
+                    onClick={() => setPackagesModalOpen(false)}
+                    className="flex-1 py-2.5 bg-white/5 hover:bg-white/10 text-slate-300 font-semibold rounded-xl text-sm transition"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSavePackage}
+                    className="flex-1 py-2.5 bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white font-bold rounded-xl text-sm transition"
+                  >
+                    Simpan Paket
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
