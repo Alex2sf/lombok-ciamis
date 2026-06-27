@@ -265,6 +265,25 @@ Route::middleware('auth:sanctum')->group(function () {
         return response()->json($request->user());
     });
 
+    Route::post('/upload', function (Request $request) {
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+        ]);
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('uploads', $filename, 'public');
+            $url = asset('storage/' . $path);
+            return response()->json([
+                'url' => $url,
+                'path' => $path
+            ]);
+        }
+
+        return response()->json(['error' => 'File tidak ditemukan.'], 400);
+    });
+
     // Admin Destinations API
     Route::put('/destinations/{key}', function (Request $request, $key) {
         $destination = \App\Models\Destination::findOrFail($key);

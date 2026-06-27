@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Save, Bold, Italic, Heading, List, Link as LinkIcon, Quote } from "lucide-react";
+import { ArrowLeft, Save, Bold, Italic, Heading, List, Link as LinkIcon, Quote, Upload } from "lucide-react";
 
 interface Post {
   id: number;
@@ -31,6 +31,7 @@ function TulisArtikelForm() {
   const [status, setStatus] = useState<"Publish" | "Draft">("Publish");
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
 
   const insertFormat = (formatType: "bold" | "italic" | "heading" | "list" | "link" | "quote") => {
     const textarea = document.getElementById("editor-konten") as HTMLTextAreaElement;
@@ -129,6 +130,42 @@ function TulisArtikelForm() {
 
     loadData();
   }, [editId, router]);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const token = localStorage.getItem("admin_token");
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+
+    try {
+      const res = await fetch(`${apiUrl}/upload`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/json"
+        },
+        body: formData
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setGambar(data.url);
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        alert(errData.message || "Gagal mengupload gambar.");
+      }
+    } catch (err) {
+      console.error("Error uploading file:", err);
+      alert("Terjadi kesalahan saat mengupload.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -430,15 +467,32 @@ function TulisArtikelForm() {
               {/* URL Gambar */}
               <div>
                 <label className="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">
-                  URL Gambar Banner
+                  Gambar Banner
                 </label>
-                <input
-                  type="url"
-                  value={gambar}
-                  onChange={(e) => setGambar(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition outline-none text-sm mb-3"
-                  placeholder="https://images.unsplash.com/photo-..."
-                />
+                <div className="flex gap-2 mb-3">
+                  <input
+                    type="url"
+                    value={gambar}
+                    onChange={(e) => setGambar(e.target.value)}
+                    className="flex-grow px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition outline-none text-sm"
+                    placeholder="Pake URL atau upload file..."
+                  />
+                  <label className="cursor-pointer bg-white/5 hover:bg-white/10 border border-white/10 px-4 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all text-xs font-bold gap-1.5 h-[46px] shrink-0">
+                    {uploading ? (
+                      <span className="w-3.5 h-3.5 border-2 border-teal-400 border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <Upload className="w-4 h-4" />
+                    )}
+                    <span>Upload</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                      disabled={uploading}
+                    />
+                  </label>
+                </div>
 
                 {/* Real-time Preview Gambar */}
                 {gambar && (

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, FileText, MapPin, Image as ImageIcon, Settings, LogOut, Menu, X, Save, Edit2, Plus, Trash2, Eye } from "lucide-react";
+import { LayoutDashboard, FileText, MapPin, Image as ImageIcon, Settings, LogOut, Menu, X, Save, Edit2, Plus, Trash2, Eye, Upload } from "lucide-react";
 import { DestinationData, SpotItem, ItineraryDay, TripPackage } from "../../data/destinationsData";
 
 const NAV_ITEMS = [
@@ -49,6 +49,7 @@ export default function AdminDestinasi() {
   const [packageDesc, setPackageDesc] = useState("");
   const [packageFeatures, setPackageFeatures] = useState<string>("");
   const [packageImg, setPackageImg] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   // Edit Itinerary Modal States
   const [itineraryModalOpen, setItineraryModalOpen] = useState(false);
@@ -150,6 +151,42 @@ export default function AdminDestinasi() {
     localStorage.removeItem("admin_token");
     localStorage.removeItem("admin_user");
     router.push("/admin/login");
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, setImageState: (url: string) => void) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const token = localStorage.getItem("admin_token");
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+
+    try {
+      const res = await fetch(`${apiUrl}/upload`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/json"
+        },
+        body: formData
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setImageState(data.url);
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        alert(errData.message || "Gagal mengupload gambar.");
+      }
+    } catch (err) {
+      console.error("Error uploading file:", err);
+      alert("Terjadi kesalahan saat mengupload.");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSaveDestination = async (e: React.FormEvent) => {
@@ -794,14 +831,46 @@ export default function AdminDestinasi() {
               </div>
 
               <div>
-                <label className="block text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">URL Gambar Spot</label>
-                <input
-                  type="url"
-                  value={spotImg}
-                  onChange={(e) => setSpotImg(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-teal-500 transition outline-none text-sm"
-                  placeholder="https://images.unsplash.com/photo-..."
-                />
+                <label className="block text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">Gambar Spot</label>
+                <div className="flex gap-2 mb-2">
+                  <input
+                    type="url"
+                    value={spotImg}
+                    onChange={(e) => setSpotImg(e.target.value)}
+                    className="flex-grow px-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-teal-500 transition outline-none text-sm"
+                    placeholder="Pake URL atau upload file..."
+                  />
+                  <label className="cursor-pointer bg-white/5 hover:bg-white/10 border border-white/10 px-4 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all text-xs font-bold gap-1.5 h-[42px] shrink-0">
+                    {uploading ? (
+                      <span className="w-3.5 h-3.5 border-2 border-teal-400 border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <Upload className="w-3.5 h-3.5" />
+                    )}
+                    <span>Upload</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => handleImageUpload(e, setSpotImg)}
+                      disabled={uploading}
+                    />
+                  </label>
+                </div>
+                {spotImg && (
+                  <div className="aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-950 border border-white/10 relative">
+                    <img
+                      src={spotImg}
+                      alt="Preview Spot"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = "none";
+                      }}
+                    />
+                    <span className="absolute bottom-2 right-2 bg-slate-900/80 px-2 py-0.5 rounded text-[10px] text-slate-300">
+                      Preview Foto Spot
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div>
@@ -960,14 +1029,31 @@ export default function AdminDestinasi() {
                 </div>
 
                 <div>
-                  <label className="block text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">URL Gambar Banner Paket (Opsional)</label>
-                  <input
-                    type="url"
-                    value={packageImg}
-                    onChange={(e) => setPackageImg(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-teal-500 transition outline-none text-sm mb-2"
-                    placeholder="https://images.unsplash.com/photo-..."
-                  />
+                  <label className="block text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">Gambar Banner Paket (Opsional)</label>
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="url"
+                      value={packageImg}
+                      onChange={(e) => setPackageImg(e.target.value)}
+                      className="flex-grow px-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white focus:ring-2 focus:ring-teal-500 transition outline-none text-sm"
+                      placeholder="Pake URL atau upload file..."
+                    />
+                    <label className="cursor-pointer bg-white/5 hover:bg-white/10 border border-white/10 px-4 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all text-xs font-bold gap-1.5 h-[42px] shrink-0">
+                      {uploading ? (
+                        <span className="w-3.5 h-3.5 border-2 border-teal-400 border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <Upload className="w-3.5 h-3.5" />
+                      )}
+                      <span>Upload</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleImageUpload(e, setPackageImg)}
+                        disabled={uploading}
+                      />
+                    </label>
+                  </div>
                   {packageImg && (
                     <div className="aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-950 border border-white/10 relative">
                       <img
