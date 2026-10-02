@@ -7,6 +7,7 @@ import FloatingWA from "./components/FloatingWA";
 import Destinations from "./components/Destinations";
 import Itinerary from "./components/Itinerary";
 import TripPackages from "./components/TripPackages";
+import ServicesSection from "./components/ServicesSection";
 import GalleryTestimonials from "./components/GalleryTestimonials";
 import FAQ from "./components/FAQ";
 import BlogPreview from "./components/BlogPreview";
@@ -256,6 +257,9 @@ export default function Home() {
       {/* ─── TRIP PACKAGES ─────────────────────────────────────── */}
       <TripPackages data={dest} />
 
+      {/* ─── SERVICES & EXTRA FACILITIES ────────────────────────── */}
+      <ServicesSection />
+
       {/* ─── GALLERY + TESTIMONIALS ────────────────────────────── */}
       <GalleryTestimonials />
 
@@ -306,6 +310,8 @@ export default function Home() {
                   </button>
                 </li>
                 <li><a href="#itinerary" className="hover:text-white transition">Itinerary</a></li>
+                <li><a href="#packages" className="hover:text-white transition">Paket Trip</a></li>
+                <li><a href="#services" className="hover:text-white transition">Layanan Service</a></li>
                 <li><a href="#gallery" className="hover:text-white transition">Gallery</a></li>
                 <li><Link href="/blog" className="hover:text-white transition">Travel Blog</Link></li>
               </ul>

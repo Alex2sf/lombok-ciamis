@@ -22,6 +22,7 @@ import {
   Menu,
   X,
   Bell,
+  Briefcase,
 } from "lucide-react";
 
 // ── Types ──────────────────────────────────────────────────
@@ -51,6 +52,7 @@ interface StatCard {
 const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/destinasi", label: "Destinasi", icon: MapPin },
+  { href: "/admin/services", label: "Layanan Service", icon: Briefcase },
   { href: "/admin/galeri", label: "Galeri", icon: Image },
 ];
 
@@ -399,6 +401,60 @@ export default function AdminDashboard() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* ── Quick Menu / Shortcut Cards ────────────────── */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Link
+                href="/admin/destinasi"
+                className="p-5 bg-white/5 border border-white/10 hover:border-blue-500/40 rounded-2xl flex items-center justify-between group transition hover:bg-white/[0.08]"
+              >
+                <div className="flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-white text-sm group-hover:text-blue-400 transition-colors">Kelola Destinasi</h3>
+                    <p className="text-[11px] text-slate-400">Atur spot wisata, rundown & paket</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
+              </Link>
+
+              <Link
+                href="/admin/services"
+                className="p-5 bg-gradient-to-r from-teal-500/10 to-blue-500/10 border border-teal-500/20 hover:border-teal-500/50 rounded-2xl flex items-center justify-between group transition hover:bg-teal-500/[0.15]"
+              >
+                <div className="flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center font-bold">
+                    <Briefcase className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <h3 className="font-bold text-white text-sm group-hover:text-teal-300 transition-colors">Layanan Service</h3>
+                      <span className="text-[9px] bg-teal-500/30 text-teal-300 font-extrabold px-1.5 py-0.2 rounded">Baru</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400">Atur sewa mobil, kamera, porter dll</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
+              </Link>
+
+              <Link
+                href="/admin/galeri"
+                className="p-5 bg-white/5 border border-white/10 hover:border-amber-500/40 rounded-2xl flex items-center justify-between group transition hover:bg-white/[0.08]"
+              >
+                <div className="flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+                    <Image className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-white text-sm group-hover:text-amber-400 transition-colors">Galeri & Testimoni</h3>
+                    <p className="text-[11px] text-slate-400">Koleksi foto kegiatan & ulasan peserta</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
+              </Link>
             </div>
 
             {/* ── Artikel Table ────────────────────────────────── */}

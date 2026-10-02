@@ -44,6 +44,8 @@ export default function Navbar() {
             <a href="#destinations" className={`transition ${scrolled ? "hover:text-blue-600" : "hover:text-teal-300"}`}>Destinasi</a>
             <a href="#why-us" className={`transition ${scrolled ? "hover:text-blue-600" : "hover:text-teal-300"}`}>Kenapa Kami</a>
             <a href="#itinerary" className={`transition ${scrolled ? "hover:text-blue-600" : "hover:text-teal-300"}`}>Itinerary</a>
+            <a href="#packages" className={`transition ${scrolled ? "hover:text-blue-600" : "hover:text-teal-300"}`}>Paket Trip</a>
+            <a href="#services" className={`transition ${scrolled ? "hover:text-blue-600" : "hover:text-teal-300"}`}>Layanan</a>
             <a href="#gallery" className={`transition ${scrolled ? "hover:text-blue-600" : "hover:text-teal-300"}`}>Gallery</a>
             <a href="#testimonials" className={`transition ${scrolled ? "hover:text-blue-600" : "hover:text-teal-300"}`}>Testimoni</a>
             <a href="#faq" className={`transition ${scrolled ? "hover:text-blue-600" : "hover:text-teal-300"}`}>FAQ</a>
@@ -78,6 +80,8 @@ export default function Navbar() {
             <a href="#destinations" onClick={() => setOpen(false)}>Destinasi</a>
             <a href="#why-us" onClick={() => setOpen(false)}>Kenapa Kami</a>
             <a href="#itinerary" onClick={() => setOpen(false)}>Itinerary</a>
+            <a href="#packages" onClick={() => setOpen(false)}>Paket Trip</a>
+            <a href="#services" onClick={() => setOpen(false)}>Layanan</a>
             <a href="#gallery" onClick={() => setOpen(false)}>Gallery</a>
             <a href="#testimonials" onClick={() => setOpen(false)}>Testimoni</a>
             <a href="#faq" onClick={() => setOpen(false)}>FAQ</a>

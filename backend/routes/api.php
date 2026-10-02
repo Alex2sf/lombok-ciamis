@@ -260,7 +260,26 @@ Route::get('/posts/{slug}', function ($slug) {
     return response()->json(Post::where('slug', $slug)->firstOrFail());
 });
 
+// Public Services API
+Route::get('/services', function () {
+    $filePath = storage_path('app/services.json');
+    if (file_exists($filePath)) {
+        $content = json_decode(file_get_contents($filePath), true);
+        return response()->json($content);
+    }
+    return response()->json([]);
+});
+
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/services', function (Request $request) {
+        $data = $request->input('services', []);
+        $dir = storage_path('app');
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+        file_put_contents(storage_path('app/services.json'), json_encode($data, JSON_PRETTY_PRINT));
+        return response()->json(['message' => 'Services updated successfully', 'data' => $data]);
+    });
     Route::get('/user', function (Request $request) {
         return response()->json($request->user());
     });

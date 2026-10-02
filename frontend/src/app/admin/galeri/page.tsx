@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, FileText, MapPin, Image as ImageIcon, Settings, LogOut, Menu, X, Save, Plus, Trash2, Star, Edit2, Eye, Upload } from "lucide-react";
+import { LayoutDashboard, FileText, MapPin, Image as ImageIcon, Settings, LogOut, Menu, X, Save, Plus, Trash2, Star, Edit2, Eye, Upload, Briefcase } from "lucide-react";
 
 const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/destinasi", label: "Destinasi", icon: MapPin },
+  { href: "/admin/services", label: "Layanan Service", icon: Briefcase },
   { href: "/admin/galeri", label: "Galeri", icon: ImageIcon },
 ];
 
